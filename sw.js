@@ -21,3 +21,15 @@ self.addEventListener('install', function(event) {
         })
     );
 });
+
+self.addEventListener('fetch', (event) => {
+    console.log('sw fetch');
+    console.log(event.request.url);
+    event.respondWith(
+        caches.match(event.request).then(function(response) {
+            return response || fetch(event.request);
+        }).catch(function (error) {
+            console.log(error);
+        })
+    );
+});
